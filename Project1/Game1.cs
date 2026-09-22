@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -14,16 +14,16 @@ namespace Monogame_2___Lists_and_Loops
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         SpriteFont catFont, instructionFont;
-        int catCount, rotation;
         KeyboardState keyboardState;
         MouseState mouseState;
         Rectangle window;
-        Vector2 textRect, instructions, enter, score;
+        Vector2 textRect, enter, score;
         Texture2D titleScreen, mainScreen;
         Random generator = new Random();
         List<Texture2D> CatTextures = new List<Texture2D>();
         List<Texture2D> SpawnedCats = new List<Texture2D>();
         List<Rectangle> CatRects = new List<Rectangle>();
+        List<float> CatRotations = new List<float>();
         int scrollCount, oldScroll;
         enum Screen
         {
@@ -91,15 +91,16 @@ namespace Monogame_2___Lists_and_Loops
                 if (currentScroll > oldScroll)
                 {
                     CatRects.Add(
-                        new Rectangle(generator.Next(window.Width - 100), generator.Next(window.Height - 100), generator.Next(0, 51), generator.Next(0, 51))
+                        new Rectangle(generator.Next(window.Width - 100), generator.Next(window.Height - 100), generator.Next(50, 151), generator.Next(50, 151))
                     );
 
                     SpawnedCats.Add(
                         CatTextures[generator.Next(CatTextures.Count)]
                     );
-
+                    CatRotations.Add(
+                        (float)(generator.NextDouble() * Math.PI * 2)
+                    );
                     scrollCount++;
-                    rotation = generator.Next(1, 4);
                 }
                 else if (currentScroll < oldScroll)
                 {
@@ -107,7 +108,7 @@ namespace Monogame_2___Lists_and_Loops
                     {
                         CatRects.RemoveAt(CatRects.Count - 1);
                         SpawnedCats.RemoveAt(SpawnedCats.Count - 1);
-
+                        CatRotations.RemoveAt(CatRotations.Count - 1);
                         scrollCount--;
                     }
                 }
@@ -137,7 +138,7 @@ namespace Monogame_2___Lists_and_Loops
                 _spriteBatch.DrawString(instructionFont, "Score: " + scrollCount, score, Color.Pink);
                 for (int i = 0; i < CatRects.Count; i++)
                 {
-                    _spriteBatch.Draw(SpawnedCats[i], CatRects[i], null, Color.White, (float)generator.Next(0, 7), new Vector2(0, 0), (SpriteEffects)rotation, 1f);
+                    _spriteBatch.Draw(SpawnedCats[i], CatRects[i], null, Color.White, CatRotations[i], new Vector2(0, 0), SpriteEffects.None, 1f);
                 }
             }
             _spriteBatch.End();
