@@ -14,7 +14,7 @@ namespace Monogame_2___Lists_and_Loops
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         SpriteFont catFont, instructionFont;
-        int catCount;
+        int catCount, rotation;
         KeyboardState keyboardState;
         MouseState mouseState;
         Rectangle window;
@@ -99,6 +99,7 @@ namespace Monogame_2___Lists_and_Loops
                     );
 
                     scrollCount++;
+                    rotation = generator.Next(1, 4);
                 }
                 else if (currentScroll < oldScroll)
                 {
@@ -136,7 +137,7 @@ namespace Monogame_2___Lists_and_Loops
                 _spriteBatch.DrawString(instructionFont, "Score: " + scrollCount, score, Color.Pink);
                 for (int i = 0; i < CatRects.Count; i++)
                 {
-                    _spriteBatch.Draw(SpawnedCats[i], CatRects[i], null, Color.White, (float)generator.Next(0, 7), new Vector2(0, 0), (SpriteEffects)generator.Next(3), 1f);
+                    _spriteBatch.Draw(SpawnedCats[i], CatRects[i], null, Color.White, (float)generator.Next(0, 7), new Vector2(0, 0), (SpriteEffects)rotation, 1f);
                 }
             }
             _spriteBatch.End();
