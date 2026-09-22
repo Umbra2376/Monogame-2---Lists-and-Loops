@@ -12,7 +12,7 @@ namespace Monogame_2___Lists_and_Loops
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        SpriteFont catFont;
+        SpriteFont catFont, instructionFont;
         Rectangle window;
         Vector2 textRect, instructions, enter;
         Texture2D titleScreen, mainScreen;
@@ -48,9 +48,10 @@ namespace Monogame_2___Lists_and_Loops
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.ApplyChanges();
             textRect = new Vector2(50, 100);
+            enter = new Vector2(50, 200);
             for (int i = 1; i < 7; i++)
                 CatTextures.Add(Content.Load<Texture2D>("Cat" + i));
-            
+            instructionFont = Content.Load<>
             catFont = Content.Load<SpriteFont>("CatFont");
             titleScreen = Content.Load<Texture2D>("CatTitle");
             mainScreen = Content.Load<Texture2D>("CatBackground");
